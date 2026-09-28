@@ -1,0 +1,156 @@
+[
+ [
+  "What caused the checkout latency spike on 2026-08-14?",
+  [
+   "INC-2031"
+  ],
+  "nl"
+ ],
+ [
+  "Which runbook covers database connection exhaustion?",
+  [
+   "RB-002"
+  ],
+  "nl"
+ ],
+ [
+  "Why did release 0.4.1 get blocked for two hours?",
+  [
+   "INC-2052"
+  ],
+  "nl"
+ ],
+ [
+  "How do I roll back a bad deploy?",
+  [
+   "RB-003"
+  ],
+  "nl"
+ ],
+ [
+  "What should I check when every client receives 429?",
+  [
+   "RB-001"
+  ],
+  "nl"
+ ],
+ [
+  "Why did the pipeline stall waiting in deploy?",
+  [
+   "RB-005"
+  ],
+  "nl"
+ ],
+ [
+  "Which team owns the rate limiter?",
+  [
+   "ARCH-001"
+  ],
+  "nl"
+ ],
+ [
+  "What services are affected by a change to retry?",
+  [
+   "ARCH-002"
+  ],
+  "nl"
+ ],
+ [
+  "Can an agent approve its own production change?",
+  [
+   "POL-001"
+  ],
+  "nl"
+ ],
+ [
+  "What happened with the Saturday deploy?",
+  [
+   "INC-2060"
+  ],
+  "nl"
+ ],
+ [
+  "Which incident was caused by the TokenBucket refill bug?",
+  [
+   "INC-2044"
+  ],
+  "nl"
+ ],
+ [
+  "How long do approvals wait before failing closed?",
+  [
+   "RB-005"
+  ],
+  "nl"
+ ],
+ [
+  "What fills up the CI runner disks?",
+  [
+   "RB-004"
+  ],
+  "nl"
+ ],
+ [
+  "Which postmortem mentions a retry storm?",
+  [
+   "INC-2031"
+  ],
+  "nl"
+ ],
+ [
+  "What does checkout depend on?",
+  [
+   "ARCH-002"
+  ],
+  "nl"
+ ],
+ [
+  "Which incident involved DEPLOY_TOKEN quoting?",
+  [
+   "INC-2052"
+  ],
+  "nl"
+ ],
+ [
+  "RL_CAPACITY",
+  [
+   "RB-001"
+  ],
+  "identifier"
+ ],
+ [
+  "db.pool.in_use",
+  [
+   "RB-002"
+  ],
+  "identifier"
+ ],
+ [
+  "/var/ci/ws",
+  [
+   "RB-004"
+  ],
+  "identifier"
+ ],
+ [
+  "parse_env_line",
+  [
+   "INC-2052"
+  ],
+  "identifier"
+ ],
+ [
+  "weekday() > 5",
+  [
+   "INC-2060"
+  ],
+  "identifier"
+ ],
+ [
+  "test_retry.py cap test",
+  [
+   "INC-2031"
+  ],
+  "identifier"
+ ]
+]

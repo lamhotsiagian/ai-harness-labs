@@ -1,0 +1,4 @@
+# Core and labs need only the Python standard library (3.10+).
+# Optional extras:
+streamlit>=1.40      # companion UI (app/streamlit_app.py)
+mcp>=1.10            # official MCP SDK client/server for Lab 9

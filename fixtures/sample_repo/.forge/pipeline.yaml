@@ -1,0 +1,9 @@
+name: forgeapp-ci
+stages:
+  - name: build
+    run: python -m compileall forgeapp
+  - name: test
+    run: python -m unittest discover -s tests
+  - name: deploy
+    run: ./scripts/deploy.sh
+    approval: required

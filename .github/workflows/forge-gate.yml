@@ -1,0 +1,16 @@
+name: forge-harness-gate
+on: [pull_request]
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Unit tests
+        run: python -m unittest discover -s tests -t .
+      - name: Capability + safety gate (fails the PR on regression)
+        run: python run_lab.py 27 --strict true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: gate-report, path: runs/lab27_report.json }

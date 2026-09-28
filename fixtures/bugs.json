@@ -1,0 +1,282 @@
+[
+ {
+  "id": "pricing-discount",
+  "module": "pricing",
+  "file": "forgeapp/pricing.py",
+  "title": "Discount applied as multiplier",
+  "issue": "Checkout shows 25% off a $200 item as $50. apply_discount looks inverted.",
+  "original": "price * (1 - pct / 100)",
+  "bug": "price * (pct / 100)",
+  "wrongs": [
+   "price * (1 - pct)",
+   "price - pct"
+  ],
+  "difficulty": 0.1
+ },
+ {
+  "id": "pricing-tax",
+  "module": "pricing",
+  "file": "forgeapp/pricing.py",
+  "title": "Tax not applied",
+  "issue": "total_with_tax returns the subtotal; tax is missing from invoices.",
+  "original": "subtotal * (1 + rate)",
+  "bug": "subtotal * (1 + 0)",
+  "wrongs": [
+   "subtotal * rate",
+   "subtotal + rate"
+  ],
+  "difficulty": 0.15
+ },
+ {
+  "id": "pricing-bounds",
+  "module": "pricing",
+  "file": "forgeapp/pricing.py",
+  "title": "Discount bounds unchecked",
+  "issue": "A 120% discount is accepted and produces negative prices.",
+  "original": "if not 0 <= pct <= 100:",
+  "bug": "if not 0 <= pct <= 1000:",
+  "wrongs": [
+   "if not 0 <= pct <= 200:",
+   "if pct < 0:"
+  ],
+  "difficulty": 0.2
+ },
+ {
+  "id": "slugify-trim",
+  "module": "slugify",
+  "file": "forgeapp/slugify.py",
+  "title": "Slugs keep edge dashes",
+  "issue": "slugify('  --Hello World--  ') returns '-hello-world-' in release notes.",
+  "original": "return text.strip(\"-\")",
+  "bug": "return text",
+  "wrongs": [
+   "return text.strip()",
+   "return text.replace('--', '-')"
+  ],
+  "difficulty": 0.15
+ },
+ {
+  "id": "slugify-regex",
+  "module": "slugify",
+  "file": "forgeapp/slugify.py",
+  "title": "Punctuation leaks into slugs",
+  "issue": "Release slugs contain ':' and '!' characters.",
+  "original": "r\"[^a-z0-9]+\"",
+  "bug": "r\"[ ]+\"",
+  "wrongs": [
+   "r\"[^a-z]+\"",
+   "r\"\\\\s+\""
+  ],
+  "difficulty": 0.35
+ },
+ {
+  "id": "semver-minor",
+  "module": "semver",
+  "file": "forgeapp/semver.py",
+  "title": "Minor bump keeps patch",
+  "issue": "bump('1.4.9','minor') returns 1.5.9; patch must reset to 0.",
+  "original": "return f\"{major}.{minor + 1}.0\"",
+  "bug": "return f\"{major}.{minor + 1}.{patch}\"",
+  "wrongs": [
+   "return f\"{major}.{minor}.0\"",
+   "return f\"{major + 1}.{minor}.0\""
+  ],
+  "difficulty": 0.1
+ },
+ {
+  "id": "semver-major",
+  "module": "semver",
+  "file": "forgeapp/semver.py",
+  "title": "Major bump keeps minor",
+  "issue": "bump('1.4.9','major') returns 2.4.0 instead of 2.0.0.",
+  "original": "return f\"{major + 1}.0.0\"",
+  "bug": "return f\"{major + 1}.{minor}.0\"",
+  "wrongs": [
+   "return f\"{major + 1}.{minor}.{patch}\"",
+   "return f\"{major}.0.0\""
+  ],
+  "difficulty": 0.1
+ },
+ {
+  "id": "semver-compare",
+  "module": "semver",
+  "file": "forgeapp/semver.py",
+  "title": "Lexical version comparison",
+  "issue": "The release gate thinks 1.9.0 is newer than 1.10.0.",
+  "original": "pa, pb = parse(a), parse(b)",
+  "bug": "pa, pb = a.lstrip('v'), b.lstrip('v')",
+  "wrongs": [
+   "pa, pb = parse(b), parse(a)",
+   "pa, pb = a, b"
+  ],
+  "difficulty": 0.45
+ },
+ {
+  "id": "retry-cap",
+  "module": "retry",
+  "file": "forgeapp/retry.py",
+  "title": "Backoff ignores cap",
+  "issue": "Deploy retries wait 100s even though cap is 50s.",
+  "original": "min(cap, base * (factor ** attempt))",
+  "bug": "base * (factor ** attempt)",
+  "wrongs": [
+   "max(cap, base * (factor ** attempt))",
+   "min(cap, base * factor * attempt)"
+  ],
+  "difficulty": 0.2
+ },
+ {
+  "id": "retry-exponent",
+  "module": "retry",
+  "file": "forgeapp/retry.py",
+  "title": "Linear instead of exponential backoff",
+  "issue": "Backoff schedule grows linearly: 1, 2, 3, 4 instead of 1, 2, 4, 8.",
+  "original": "base * (factor ** attempt)",
+  "bug": "base * (1 + attempt)",
+  "wrongs": [
+   "base * factor * attempt",
+   "base ** (factor * attempt)"
+  ],
+  "difficulty": 0.3
+ },
+ {
+  "id": "inventory-exact",
+  "module": "inventory",
+  "file": "forgeapp/inventory.py",
+  "title": "Exact quantity rejected",
+  "issue": "Reserving the last 2 units of a SKU with stock 2 raises OutOfStock.",
+  "original": "if available < qty:",
+  "bug": "if available <= qty:",
+  "wrongs": [
+   "if available > qty:",
+   "if available < qty - 1:"
+  ],
+  "difficulty": 0.25
+ },
+ {
+  "id": "inventory-mutation",
+  "module": "inventory",
+  "file": "forgeapp/inventory.py",
+  "title": "Reserve mutates caller state",
+  "issue": "reserve() changes the caller's stock map; audits show double reservations.",
+  "original": "updated = dict(stock)",
+  "bug": "updated = stock",
+  "wrongs": [
+   "updated = list(stock)",
+   "updated = stock.items()"
+  ],
+  "difficulty": 0.4
+ },
+ {
+  "id": "textstats-tiebreak",
+  "module": "textstats",
+  "file": "forgeapp/textstats.py",
+  "title": "Non-deterministic top words",
+  "issue": "Changelog keyword order flips between runs for equal counts.",
+  "original": "key=lambda kv: (-kv[1], kv[0])",
+  "bug": "key=lambda kv: -kv[1]",
+  "wrongs": [
+   "key=lambda kv: (kv[1], kv[0])",
+   "key=lambda kv: -len(kv[0])"
+  ],
+  "difficulty": 0.35
+ },
+ {
+  "id": "textstats-apostrophe",
+  "module": "textstats",
+  "file": "forgeapp/textstats.py",
+  "title": "Contractions split into two words",
+  "issue": "word_count(\"don't\") counts 2 words.",
+  "original": "return len(re.findall(r\"[A-Za-z0-9']+\", text))",
+  "bug": "return len(re.findall(r\"[A-Za-z0-9]+\", text))",
+  "wrongs": [
+   "return len(re.findall(r\"[A-Za-z]+\", text))",
+   "return len(re.findall(r\"\\w+\", text))"
+  ],
+  "difficulty": 0.3
+ },
+ {
+  "id": "ratelimit-refill",
+  "module": "ratelimit",
+  "file": "forgeapp/ratelimit.py",
+  "title": "Bucket never refills",
+  "issue": "After the first burst the API rejects every request forever.",
+  "original": "self.tokens + elapsed * self.refill_per_sec",
+  "bug": "self.tokens + 0 * self.refill_per_sec",
+  "wrongs": [
+   "self.tokens * elapsed",
+   "self.tokens - elapsed * self.refill_per_sec"
+  ],
+  "difficulty": 0.3
+ },
+ {
+  "id": "ratelimit-overflow",
+  "module": "ratelimit",
+  "file": "forgeapp/ratelimit.py",
+  "title": "Bucket exceeds capacity",
+  "issue": "Idle clients accumulate unlimited burst tokens.",
+  "original": "self.tokens = min(self.capacity, self.tokens + elapsed * self.refill_per_sec)",
+  "bug": "self.tokens = max(self.capacity, self.tokens + elapsed * self.refill_per_sec)",
+  "wrongs": [
+   "self.tokens = self.capacity",
+   "self.tokens = min(self.tokens, elapsed)"
+  ],
+  "difficulty": 0.35
+ },
+ {
+  "id": "envparse-quotes",
+  "module": "envparse",
+  "file": "forgeapp/envparse.py",
+  "title": "Quoted values keep quotes",
+  "issue": "TOKEN=\"a=b\" parses to '\"a=b\"' and breaks deploy auth.",
+  "original": "value = value[1:-1]",
+  "bug": "value = value[0:]",
+  "wrongs": [
+   "value = value.strip('\"')[1:]",
+   "value = value[1:]"
+  ],
+  "difficulty": 0.25
+ },
+ {
+  "id": "lint-order",
+  "module": "pipeline_lint",
+  "file": "forgeapp/pipeline_lint.py",
+  "title": "Deploy-before-test not detected",
+  "issue": "A pipeline that deploys before testing passes lint.",
+  "original": "names.index(\"deploy\") < names.index(\"test\")",
+  "bug": "names.index(\"deploy\") > names.index(\"test\")",
+  "wrongs": [
+   "names.index(\"deploy\") == names.index(\"test\")",
+   "len(names) < 2"
+  ],
+  "difficulty": 0.3
+ },
+ {
+  "id": "lint-approval",
+  "module": "pipeline_lint",
+  "file": "forgeapp/pipeline_lint.py",
+  "title": "Approval rule inverted",
+  "issue": "Lint flags deploy stages that DO require approval.",
+  "original": "stage.get(\"approval\") != \"required\"",
+  "bug": "stage.get(\"approval\") == \"required\"",
+  "wrongs": [
+   "stage.get(\"approval\") == \"optional\"",
+   "not stage.get(\"name\")"
+  ],
+  "difficulty": 0.2
+ },
+ {
+  "id": "dates-weekend",
+  "module": "dates",
+  "file": "forgeapp/dates.py",
+  "title": "Saturday treated as business day",
+  "issue": "Release calendar schedules deploys on Saturdays.",
+  "original": "return d.weekday() >= 5",
+  "bug": "return d.weekday() > 5",
+  "wrongs": [
+   "return d.weekday() >= 6",
+   "return d.weekday() == 6"
+  ],
+  "difficulty": 0.2
+ }
+]

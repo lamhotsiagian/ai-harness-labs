@@ -1,0 +1,13 @@
+[project]
+name = "forge-harness-labs"
+version = "1.0.0"
+description = "Forge: the reference harness and labs for AI Harness Engineering (AI Engineering Insider)"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+ui = ["streamlit>=1.40"]
+mcp = ["mcp>=1.10"]
+
+[tool.setuptools.packages.find]
+include = ["forge*"]

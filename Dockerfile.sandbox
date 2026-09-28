@@ -1,0 +1,5 @@
+# Minimal image for running Forge workspaces in a container (Lab 11 --docker true).
+FROM python:3.12-slim
+RUN useradd -m -u 10001 agent
+USER agent
+WORKDIR /workspace
