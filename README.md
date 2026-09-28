@@ -1,7 +1,5 @@
 # ai-harness-labs
 
-> **Companion Code Repository**: [https://github.com/lamhotsiagian/ai-harness-labs](https://github.com/lamhotsiagian/ai-harness-labs)
-
 Companion code for the book **Harness Engineering in Practice: Building Agent, Agentic & Evaluation Harnesses** (Volume 2 Edition).
 *A Systems Engineering Guide to DeepSeek Harness, Production Agent Runtimes, Execution Sandboxes, Multi-Agent Workflows, Continuous Evaluation & Harness System Design Interviews.*
 
@@ -12,6 +10,12 @@ One running project, **Forge**, a CI/CD and repository maintenance agent, grows 
   react to harness changes the way real models do (context rot, feedback, injection, reward hacking).
 - Real models plug in with one flag: `--model anthropic:<model-id>` or `--model openai:<model-id>`
   (`OPENAI_BASE_URL` also covers vLLM, Ollama, and LiteLLM gateways).
+
+<img width="1241" height="1754" alt="main-1-50-1-23_page-0001" src="https://github.com/user-attachments/assets/42b84c44-2513-469c-ad44-66d842dabad6" />
+
+Book preview: https://drive.google.com/file/d/1gf_msuyfJheV5XKnOM03aE6CnHFF7XDD/view?usp=sharing
+
+Book link: https://shop.beacons.ai/aiengineeringinsider/fb6e3e03-53a9-48e0-a501-e6239c4cc281
 
 ## Quick start
 
